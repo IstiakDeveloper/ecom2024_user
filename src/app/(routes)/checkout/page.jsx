@@ -20,7 +20,8 @@ import { toast } from "sonner";
 import { UpdateCartContext } from "@/app/_context/UpdateCartContext";
 
 function Checkout() {
-
+  // const token = sessionStorage.getItem("token");
+  // const user = JSON.parse(sessionStorage.getItem("customer"));
   const [totalCartItem, setTotalCartItem] = useState(0);
   const [cartItemList, setCartItemList] = useState([]);
   const [subtotal, setSubTotal] = useState(0);
@@ -32,6 +33,14 @@ function Checkout() {
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("cash_on_delivery");
   const [address, setAddress] = useState();
   const { updateCart, setUpdateCart } = useContext(UpdateCartContext);
+
+  let user = null;
+  let token = null;
+
+  if (typeof window !== 'undefined') {
+    token = sessionStorage.getItem("token");
+    user = JSON.parse(sessionStorage.getItem("customer"));
+  }
 
 
 

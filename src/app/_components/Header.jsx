@@ -43,8 +43,24 @@ function Header() {
   const router = useRouter();
   const [subtotal, setSubTotal] = useState(0);
   const [showFloatingCart, setShowFloatingCart] = useState(false);
+  const [isLogin, setIsLogin] = useState(false);
+  const [user, setUser] = useState(null);
+  const [token, setToken] = useState(null);
 
+  useEffect(() => {
+    const storedToken = sessionStorage.getItem("token");
+    if (storedToken) {
+      setToken(storedToken);
+      setIsLogin(true);
+    }
+  }, []);
 
+  useEffect(() => {
+    const storedUser = sessionStorage.getItem("customer");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+  }, []);
 
   useEffect(() => {
     let total = 0;
