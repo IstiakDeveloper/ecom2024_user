@@ -1,7 +1,7 @@
 const { default: axios } = require("axios");
 
 const AxiosClient = axios.create({
-  baseURL: "http://127.0.0.1:8000/api/v1",
+  baseURL: "https://islamic.najiat.com/api/v1",
 });
 
 const getCategory = () => AxiosClient.get("/categories");
