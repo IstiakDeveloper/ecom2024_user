@@ -166,8 +166,8 @@ function Checkout() {
         <div className="md:col-span-2 mx-10 mb-5 md:mx-20">
           <h2 className="font-bold text-3xl">Billing Address</h2>
           <div className="grid grid-cols-2 gap-10 mt-3">
-            <Input placeholder="Name" value={user.username} />
-            <Input placeholder="Phone" value={user.phone} />
+            <Input placeholder="Name"/>
+            <Input placeholder="Phone"/>
           </div>
           <div className="mt-3">
             <select

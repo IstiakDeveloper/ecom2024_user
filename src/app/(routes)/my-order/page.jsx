@@ -15,10 +15,17 @@ import { ArrowDown } from 'lucide-react';
 
 
 function MyOrder() {
-  const token = sessionStorage.getItem('token');
   const router = useRouter();
-  const user = JSON.parse(sessionStorage.getItem("customer"));
   const [orderList, setOrderList] = useState([]);
+
+  
+  let user = null;
+  let token = null;
+
+  if (typeof window !== 'undefined') {
+    token = sessionStorage.getItem("token");
+    user = JSON.parse(sessionStorage.getItem("customer"));
+  }
 
   useEffect(()=>{
     if(!token){
