@@ -7,12 +7,12 @@ function ThankYou() {
   const router = useRouter();
   const [orderData, setOrderData] = useState(null);
 
-  useEffect(() => {
-    const storedOrderData = sessionStorage.getItem('orderData');
-    if (storedOrderData) {
-      setOrderData(JSON.parse(storedOrderData));
-    }
-  }, []);
+  // useEffect(() => {
+  //   const storedOrderData = sessionStorage.getItem('orderData');
+  //   if (storedOrderData) {
+  //     setOrderData(JSON.parse(storedOrderData));
+  //   }
+  // }, []);
 
   return (
     <div className="container mx-auto p-8">
