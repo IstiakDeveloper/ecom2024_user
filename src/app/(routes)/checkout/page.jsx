@@ -20,8 +20,7 @@ import { toast } from "sonner";
 import { UpdateCartContext } from "@/app/_context/UpdateCartContext";
 
 function Checkout() {
-  const token = sessionStorage.getItem("token");
-  const user = JSON.parse(sessionStorage.getItem("customer"));
+
   const [totalCartItem, setTotalCartItem] = useState(0);
   const [cartItemList, setCartItemList] = useState([]);
   const [subtotal, setSubTotal] = useState(0);
