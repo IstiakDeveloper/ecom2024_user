@@ -37,15 +37,30 @@ import FloatingCart from "./FloatingCart";
 
 function Header() {
   const [categoryList, setCategoryList] = useState([]);
-  const isLogin = sessionStorage.getItem("token") ? true : false;
-  const token = sessionStorage.getItem("token");
   const { updateCart, setUpdateCart } = useContext(UpdateCartContext);
-  const user = JSON.parse(sessionStorage.getItem("customer"));
   const [totalCartItem, setTotalCartItem] = useState(0);
   const [cartItemList, setCartItemList] = useState([]);
   const router = useRouter();
   const [subtotal, setSubTotal] = useState(0);
   const [showFloatingCart, setShowFloatingCart] = useState(false);
+  const [isLogin, setIsLogin] = useState(false);
+  const [user, setUser] = useState(null);
+  const [token, setToken] = useState(null);
+
+  useEffect(() => {
+    const storedToken = sessionStorage.getItem("token");
+    if (storedToken) {
+      setToken(storedToken);
+      setIsLogin(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    const storedUser = sessionStorage.getItem("customer");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+  }, []);
 
   useEffect(() => {
     let total = 0;
@@ -71,12 +86,9 @@ function Header() {
 
   // Used ti get Total Cart Items
   const getCartItems = async () => {
-
     if (!isLogin) {
       return;
     }
-  
-    // Fetch cart items if the user is logged in
     const cartItemList_ = await GlobalApi.getCartItems(user.id, token);
     setTotalCartItem(cartItemList_.length);
     setCartItemList(cartItemList_);
@@ -84,7 +96,9 @@ function Header() {
 
   const onSignOut = () => {
     sessionStorage.clear();
-    router.push("/sign-in");
+    setToken(null);
+    setIsLogin(false);
+    setUser(null);
   };
 
   const onDeleteItem = (id) => {
@@ -95,20 +109,20 @@ function Header() {
   };
 
   const handleScroll = () => {
-      const scrolled = document.documentElement.scrollTop;
-      if (scrolled > 200) {
-        setShowFloatingCart(true);
-      } else {
-        setShowFloatingCart(false);
-      }
-    };
+    const scrolled = document.documentElement.scrollTop;
+    if (scrolled > 200) {
+      setShowFloatingCart(true);
+    } else {
+      setShowFloatingCart(false);
+    }
+  };
 
-    useEffect(() => {
-      window.addEventListener('scroll', handleScroll);
-      return () => {
-        window.removeEventListener('scroll', handleScroll);
-      };
-    }, []);
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   return (
     <div className="p-5 shadow-sm flex justify-between">
@@ -153,8 +167,9 @@ function Header() {
         </div>
 
         <div className="mr-4">
-          <Link href={'/all-products'}>
-          <Button> All Products</Button> </Link>
+          <Link href={"/all-products"}>
+            <Button> All Products</Button>{" "}
+          </Link>
         </div>
       </div>
       <div className="flex gap-5 items-center">
@@ -194,11 +209,8 @@ function Header() {
           </SheetContent>
         </Sheet>
 
-        {!isLogin ? (
-          <Link href={"/sign-in"}>
-            <Button>Login</Button>
-          </Link>
-        ) : (
+        {isLogin ? (
+          // Render user account options if logged in
           <DropdownMenu>
             <DropdownMenuTrigger>
               <CircleUserRound className="h-12 w-12 bg-green-100 text-primary p-2 rounded-full cursor-pointer" />
@@ -207,12 +219,17 @@ function Header() {
               <DropdownMenuLabel>My Account</DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem>Profile</DropdownMenuItem>
-              <Link href={'/my-order'}><DropdownMenuItem>My Order</DropdownMenuItem></Link>
-              <DropdownMenuItem onClick={() => onSignOut()}>
-                Logout{" "}
-              </DropdownMenuItem>
+              <Link href={"/my-order"}>
+                <DropdownMenuItem>My Order</DropdownMenuItem>
+              </Link>
+              <DropdownMenuItem onClick={onSignOut}>Logout</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
+        ) : (
+          // Render login button if not logged in
+          <Link href={"/sign-in"}>
+            <Button>Login</Button>
+          </Link>
         )}
       </div>
 
@@ -226,8 +243,6 @@ function Header() {
         />
       )}
     </div>
-
-    
   );
 }
 

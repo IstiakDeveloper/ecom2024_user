@@ -9,7 +9,7 @@ function AllProducts({ getAllProducts }) {
       </h2>
       <div className="mt-2 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
         {getAllProducts.map(
-          (product, index) => index < 8 && <ProductItem product={product} />
+          (product, index) => index < 8 && <ProductItem key={index} product={product} />
         )}
       </div>
     </div>

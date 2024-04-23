@@ -26,7 +26,7 @@ function AllProducts() {
         <div className='mt-8 px-12 mt-2 md:px-16'>
           <div className="mt-2 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
           {products.map(
-            (product, index) => <ProductItem product={product} />
+            (product, index) => <ProductItem key={index} product={product} />
           )}
         </div>
         </div>

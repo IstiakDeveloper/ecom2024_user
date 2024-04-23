@@ -11,7 +11,7 @@ function CartItemList({ cartItemList, onDeleteItem }) {
         style={{ maxHeight: "calc(100vh - 200px)", overflowY: "auto" }}
       >
         {cartItemList.map((cart, index) => (
-          <div className="flex justify-between items-center mb-4">
+          <div key={index} className="flex justify-between items-center mb-4">
             <div className="flex gap-6 items-center">
               <Image
                 src={process.env.NEXT_PUBLIC_BACKEDN_BASE_URL + cart.image}

@@ -64,7 +64,7 @@ function MyOrder() {
             </CollapsibleTrigger>
             <CollapsibleContent>
                 {item.orderItemList.map((order, index_)=>(
-                  <div className=''>
+                  <div key={index_} className=''>
                   <div className='grid grid-cols-5 my-1 items-center'>
                       <Image src={ process.env.NEXT_PUBLIC_BACKEDN_BASE_URL + order.image} width={80} height={80} alt='image' unoptimized={true} className='bg-gray-100 rounded-md border' />
                       <div className='col-span-2'>
